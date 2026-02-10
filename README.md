@@ -19,18 +19,19 @@ bun --version
 Run the command below to make a new pendekin-url project
 
 ```bash
-bun create pendekin-url@latest my-app
+git clone https://github.com/rsuppersahabatan/pendekin-url.git
 ```
 
 Once complete run the dev server
 
 ```bash
-cd my-app
-bun dev
+cd pendekin-url
+bun install
+bun run dev
 ```
 
 > [!NOTE]
-> Visit [pendekin-url](https://pendekin-url.com) for the full documentation!
+> Visit [pendekin-url](https://go.rspersahabatan.co.id) for the full documentation!
 
 ## Features
 
