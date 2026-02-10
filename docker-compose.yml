@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:latest
+    container_name: pendekin-url-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - pendekin-network
+
+  # Backend Server
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pendekin-url-server
+    restart: unless-stopped
+    environment:
+      DB_URL: mongodb://admin:password123@mongodb:27017/pendekin-url?authSource=admin
+      BASEURI: http://localhost:3000
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    networks:
+      - pendekin-network
+
+  # Frontend Client with Nginx
+  client:
+    image: nginx:alpine
+    container_name: pendekin-url-client
+    restart: unless-stopped
+    volumes:
+      - ./client/dist:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    networks:
+      - pendekin-network
+
+networks:
+  pendekin-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
