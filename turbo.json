@@ -125,6 +125,12 @@
                 "NODE_ENV",
                 "CI"
             ]
+        },
+        "deploy": {
+            "dependsOn": [
+                "^build"
+            ],
+            "cache": false
         }
     },
     "globalDependencies": [
