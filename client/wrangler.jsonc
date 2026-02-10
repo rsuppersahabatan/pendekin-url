@@ -1,6 +1,6 @@
 {
     "$schema": "../node_modules/wrangler/config-schema.json",
-    "name": "client",
+    "name": "pendekin-url",
     "compatibility_date": "2025-05-25",
     "assets": {
         "directory": "./dist"
