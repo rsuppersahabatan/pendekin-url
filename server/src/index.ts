@@ -31,7 +31,7 @@ const generateUniqueShortId = async () => {
 };
 
 app.get('/', (c) => {
-    return c.json({ message: 'Hi there' })
+    return c.json({ message: 'Hi there with HONO' })
 })
 
 app.post('/api/url/shorten', async (c) => {
