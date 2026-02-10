@@ -73,12 +73,12 @@ export const InputForm = () => {
             bg="dark"
             className={styles.mainContainer}>
             <FormControl isInvalid={isError}>
-                <FormLabel>Convert long URLs into shortened versions with a single click.</FormLabel>
+                <FormLabel>Paste a Long URL.</FormLabel>
                 <Input
                     id="longUrl"
                     type="url"
                     value={input.longUrl}
-                    placeholder="Paste here your long URL"
+                    placeholder="Paste your long URL here"
                     onChange={handleInputChange}
                     onKeyDown={handleEnter}
                 />
@@ -88,7 +88,7 @@ export const InputForm = () => {
                     <FormErrorMessage>URL is required.</FormErrorMessage>
                 )}
             </FormControl>
-            <FormLabel mt={7} fontSize='md'>Create personalized and memorable links for your URLs (Optional)</FormLabel>
+            <FormLabel mt={7} fontSize='md'>Customize a personalized URL (Optional)</FormLabel>
             <InputGroup size='md' className={styles.InputGroup}>
                 <InputLeftAddon children={`${clientBaseUrl}`} className={styles.BaseUrlAddon} w='50%' />
                 <Input placeholder='your personalized code ' id="urlCode"
