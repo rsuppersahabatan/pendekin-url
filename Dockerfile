@@ -10,16 +10,17 @@ COPY server/package.json ./server/
 COPY client/package.json ./client/
 COPY shared/package.json ./shared/
 
-# Install dependencies
-RUN bun install --frozen-lockfile
-
-# Copy source code
+# Copy source code BEFORE installing dependencies
+# This ensures source files are available for the postinstall script
 COPY server ./server
 COPY client ./client
 COPY shared ./shared
 
-# Build the application
-RUN bun run build
+# Install dependencies (postinstall will run and build shared + server)
+RUN bun install --frozen-lockfile
+
+# Build the client (already built by postinstall for server/shared)
+RUN bun run build:client
 
 # Stage 2: Production image
 FROM oven/bun:1.2.4-slim
