@@ -65,7 +65,7 @@ export const InputForm = () => {
 
     return (
         <Box
-            width={"40%"}
+            width={"70%"}
             margin={"auto"}
             boxShadow="dark-lg"
             p="6"
