@@ -20,6 +20,7 @@ app.get('/', (c) => {
 if (process.env.CF_ACCESS_AUDIENCE) {
     app.use('/api/*', accessMiddleware)
 }
+
 app.post('/api/url/shorten', urlController.shortenUrl)
 app.get('/api/urls', urlController.getAllUrls)
 app.get('/api/urls/:code', urlController.getUrlDetails)

@@ -18,8 +18,6 @@
 		"build": "turbo build",
 		"build:client": "turbo build --filter=client",
 		"build:server": "turbo build --filter=server",
-		"deploy:server": "turbo run deploy --filter=server",
-		"deploy": "turbo run deploy",
 		"lint": "turbo lint",
 		"type-check": "turbo type-check",
 		"test": "turbo test",
