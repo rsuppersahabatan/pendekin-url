@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { connectDB } from './configs/db'
 import type { ApiResponse } from 'shared'
+import { accessMiddleware } from './middlewares/access.middleware'
 import * as urlController from './controllers/url.controller'
 
 const app = new Hono()
@@ -15,7 +16,8 @@ app.get('/', (c) => {
     return c.json({ message: 'Hi there with HONO' })
 })
 
-// URL Shortener API
+// URL Shortener API (Protected by Cloudflare Access)
+app.use('/api/*', accessMiddleware)
 app.post('/api/url/shorten', urlController.shortenUrl)
 app.get('/api/urls', urlController.getAllUrls)
 app.get('/api/urls/:code', urlController.getUrlDetails)
