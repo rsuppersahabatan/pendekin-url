@@ -18,10 +18,14 @@
 		"build": "turbo build",
 		"build:client": "turbo build --filter=client",
 		"build:server": "turbo build --filter=server",
+		"deploy:server": "cd server && bun run deploy",
 		"lint": "turbo lint",
 		"type-check": "turbo type-check",
 		"test": "turbo test",
-		"postinstall": "turbo build --filter=shared --filter=server"
+		"postinstall": "turbo build --filter=shared --filter=server",
+		"dev:cloudflare": "wrangler dev",
+		"deploy": "wrangler deploy --minify",
+		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
 	},
 	"keywords": [
 		"bun",
@@ -33,7 +37,8 @@
 	],
 	"devDependencies": {
 		"bun-types": "latest",
-		"turbo": "^2.6.3"
+		"turbo": "^2.6.3",
+		"wrangler": "^4.4.0"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.3"
