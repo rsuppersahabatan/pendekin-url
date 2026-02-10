@@ -1,51 +1,23 @@
-import { useState } from 'react'
-import beaver from './assets/beaver.svg'
-import type { ApiResponse } from 'shared'
-import './App.css'
-
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000"
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Homepage from "./Homepage";
+import ShortUrlRedirect from "./components/ShortUrlRedirect";
+import Toggle from "./components/Toggle";
 
 function App() {
-  const [data, setData] = useState<ApiResponse | undefined>()
-
-  async function sendRequest() {
-    try {
-      const req = await fetch(`${SERVER_URL}/hello`)
-      const res: ApiResponse = await req.json()
-      setData(res)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
-    <>
-      <div>
-        <a href="https://github.com/stevedylandev/bhvr" target="_blank">
-          <img src={beaver} className="logo" alt="beaver logo" />
-        </a>
-      </div>
-      <h1>bhvr</h1>
-      <h2>Bun + Hono + Vite + React</h2>
-      <p>A typesafe fullstack monorepo</p>
-      <div className="card">
-        <div className='button-container'>
-          <button onClick={sendRequest}>
-            Call API
-          </button>
-          <a className='docs-link' target='_blank' href="https://bhvr.dev">Docs</a>
-        </div>
-        {data && (
-          <pre className='response'>
-            <code>
-            Message: {data.message} <br />
-            Success: {data.success.toString()}
-            </code>
-          </pre>
-        )}
-      </div>
-    </>
-  )
+    <div className="App">
+      <Routes>
+        <Route path='/' element={<Homepage />} />
+        <Route path='/:urlCode'
+          element={<ShortUrlRedirect />}
+        />
+      </Routes>
+      <>
+        <Toggle />
+      </>
+    </div>
+  );
 }
 
-export default App
+export default App;
