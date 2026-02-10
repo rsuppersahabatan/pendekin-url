@@ -8,7 +8,7 @@ export default function Homepage() {
                 URL Shortener
             </Heading>
             <InputForm />
-            <Text m={'3%'}>
+            <Text m={'2%'}>
                 Based On ({' '}
                 <Link isExternal href="https://akshay-kumar-portfoilo.netlify.app/">
                     Akshay Kumar
