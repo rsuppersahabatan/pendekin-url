@@ -16,8 +16,10 @@ app.get('/', (c) => {
     return c.json({ message: 'Hi there with HONO' })
 })
 
-// URL Shortener API (Protected by Cloudflare Access)
-app.use('/api/*', accessMiddleware)
+// URL Shortener API (Protected by Cloudflare Access in production)
+if (process.env.CF_ACCESS_AUDIENCE) {
+    app.use('/api/*', accessMiddleware)
+}
 app.post('/api/url/shorten', urlController.shortenUrl)
 app.get('/api/urls', urlController.getAllUrls)
 app.get('/api/urls/:code', urlController.getUrlDetails)
