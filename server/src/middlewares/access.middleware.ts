@@ -42,8 +42,8 @@ export const accessMiddleware = async (c: Context, next: Next) => {
             ['verify']
         );
 
-        await verify(token, cryptoKey);
-
+        await verify(token, cryptoKey, 'RS256');
+        
         // 4. Verify Audience
         const { payload } = decode(token);
         if (payload.aud !== aud) {
