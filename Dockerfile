@@ -17,7 +17,7 @@ COPY client ./client
 COPY shared ./shared
 
 # Install dependencies (postinstall will run and build shared + server)
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Build the client (already built by postinstall for server/shared)
 RUN bun run build:client
