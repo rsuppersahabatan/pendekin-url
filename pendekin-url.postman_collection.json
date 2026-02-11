@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "pendekin-url-api",
+		"name": "Pendekin URL Shortener",
+		"description": "API collection untuk Pendekin URL Shortener.\n\n## Setup\n1. Pastikan Docker containers sudah running: `docker compose up -d`\n2. Set variable `base_url` sesuai environment (default: `http://localhost:89`)\n\n## Endpoints\n| Method | Endpoint | Deskripsi |\n|--------|----------|----------|\n| POST | /api/url/shorten | Buat short link baru |\n| GET | /api/urls | List semua short links |\n| GET | /api/urls/:code | Detail short link by code |\n| DELETE | /api/urls/:code | Hapus short link |\n| GET | /:code | Redirect ke long URL |",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:89",
+			"type": "string"
+		},
+		{
+			"key": "url_code",
+			"value": "ggl",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Shorten URL",
+			"item": [
+				{
+					"name": "Create Short Link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"longUrl\": \"https://google.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/url/shorten",
+							"host": ["{{base_url}}"],
+							"path": ["api", "url", "shorten"]
+						},
+						"description": "Buat short link baru dengan auto-generated code.\n\n**Request Body:**\n- `longUrl` (required): URL yang akan dipendekkan. Harus berupa URL valid dengan `http://` atau `https://`.\n\n**Response:**\n- `201`: `{ \"urlCode\": \"abc123\" }`\n- `200`: Jika URL sudah pernah disubmit, return code yang sudah ada.\n- `401`: URL tidak valid.\n- `500`: Server error."
+					},
+					"response": [
+						{
+							"name": "201 - Created",
+							"status": "Created",
+							"code": 201,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"urlCode\": \"1IFfa6\"\n}"
+						},
+						{
+							"name": "401 - Invalid URL",
+							"status": "Unauthorized",
+							"code": 401,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"error\": \"Invalid Url\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Short Link (Custom Code)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"longUrl\": \"https://google.com\",\n    \"urlCode\": \"{{url_code}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/url/shorten",
+							"host": ["{{base_url}}"],
+							"path": ["api", "url", "shorten"]
+						},
+						"description": "Buat short link dengan custom code.\n\n**Request Body:**\n- `longUrl` (required): URL yang akan dipendekkan.\n- `urlCode` (optional): Custom code untuk short link.\n\n**Response:**\n- `201`: `{ \"urlCode\": \"ggl\" }`\n- `400`: Code sudah dipakai.\n- `401`: URL tidak valid."
+					},
+					"response": [
+						{
+							"name": "201 - Created with Custom Code",
+							"status": "Created",
+							"code": 201,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"urlCode\": \"ggl\"\n}"
+						},
+						{
+							"name": "400 - Code Already In Use",
+							"status": "Bad Request",
+							"code": 400,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"error\": \"Code ggl already in use. Please choose a different code.\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Manage URLs",
+			"item": [
+				{
+					"name": "Get All URLs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/urls",
+							"host": ["{{base_url}}"],
+							"path": ["api", "urls"]
+						},
+						"description": "List semua short links yang tersimpan, diurutkan dari yang terbaru.\n\n**Response:**\n- `200`: Array of URL objects.\n- `500`: Server error."
+					},
+					"response": [
+						{
+							"name": "200 - Success",
+							"status": "OK",
+							"code": 200,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "[\n    {\n        \"_id\": \"...\",\n        \"urlCode\": \"ggl\",\n        \"longUrl\": \"https://google.com\",\n        \"shortUrl\": \"http://localhost:89/ggl\",\n        \"date\": \"2026-02-10T...\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get URL Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/urls/{{url_code}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "urls", "{{url_code}}"]
+						},
+						"description": "Ambil detail short link berdasarkan code.\n\n**Path Parameter:**\n- `code`: URL code (contoh: `ggl`)\n\n**Response:**\n- `200`: URL object.\n- `404`: URL tidak ditemukan."
+					},
+					"response": [
+						{
+							"name": "200 - Found",
+							"status": "OK",
+							"code": 200,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"_id\": \"...\",\n    \"urlCode\": \"ggl\",\n    \"longUrl\": \"https://google.com\",\n    \"shortUrl\": \"http://localhost:89/ggl\",\n    \"date\": \"2026-02-10T...\"\n}"
+						},
+						{
+							"name": "404 - Not Found",
+							"status": "Not Found",
+							"code": 404,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"error\": \"URL not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete URL",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/urls/{{url_code}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "urls", "{{url_code}}"]
+						},
+						"description": "Hapus short link berdasarkan code.\n\n**Path Parameter:**\n- `code`: URL code yang akan dihapus.\n\n**Response:**\n- `200`: Berhasil dihapus.\n- `404`: URL tidak ditemukan."
+					},
+					"response": [
+						{
+							"name": "200 - Deleted",
+							"status": "OK",
+							"code": 200,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"message\": \"URL deleted successfully\"\n}"
+						},
+						{
+							"name": "404 - Not Found",
+							"status": "Not Found",
+							"code": 404,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"error\": \"URL not found\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Redirect",
+			"item": [
+				{
+					"name": "Redirect Short URL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{url_code}}",
+							"host": ["{{base_url}}"],
+							"path": ["{{url_code}}"]
+						},
+						"description": "Akses short link untuk redirect ke long URL.\n\n**Path Parameter:**\n- `code`: URL code.\n\n**Response:**\n- `302`: Redirect ke long URL.\n- `404`: URL tidak ditemukan.\n\n**Note:** Di Postman, disable \"Automatically follow redirects\" di Settings untuk melihat 302 response."
+					},
+					"response": [
+						{
+							"name": "302 - Redirect",
+							"status": "Found",
+							"code": 302,
+							"header": [
+								{
+									"key": "Location",
+									"value": "https://google.com"
+								}
+							],
+							"body": ""
+						},
+						{
+							"name": "404 - Not Found",
+							"status": "Not Found",
+							"code": 404,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "\"No URL Found\""
+						}
+					]
+				}
+			]
+		}
+	]
+}
