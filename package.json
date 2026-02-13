@@ -16,8 +16,8 @@
 		"dev:client": "turbo dev --filter=client",
 		"dev:server": "turbo dev --filter=server",
 		"build": "turbo build",
-		"build:client": "turbo build --filter=client",
-		"build:server": "turbo build --filter=server",
+		"build:client": "turbo build --filter=client --force --no-cache",
+		"build:server": "turbo build --filter=server --force --no-cache",
 		"lint": "turbo lint",
 		"type-check": "turbo type-check",
 		"test": "turbo test",
@@ -33,7 +33,7 @@
 	],
 	"devDependencies": {
 		"bun-types": "latest",
-		"turbo": "^2.6.3"
+		"turbo": "^2.8.7"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.3"
