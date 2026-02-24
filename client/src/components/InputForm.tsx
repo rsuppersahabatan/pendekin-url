@@ -12,6 +12,8 @@ import {
     useClipboard,
     InputGroup,
     InputLeftAddon,
+    Link,
+    Text,
 } from "@chakra-ui/react";
 import styles from './InputForm.module.css';
 
@@ -114,6 +116,21 @@ export const InputForm = () => {
                     {hasCopied ? "Copied" : "Copy"}
                 </Button>
             </Flex>}
+
+            <Text mt={4} textAlign="center" fontSize="sm" color="gray.500">
+                Need a Private link?{" "}
+                <Link
+                    href="/register"
+                    color="blue.400"
+                    fontWeight="semibold"
+                    _hover={{
+                        color: "blue.600",
+                        textDecoration: "underline",
+                    }}
+                >
+                    Please Register!
+                </Link>
+            </Text>
         </Box>
     );
 };
