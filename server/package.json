@@ -8,6 +8,7 @@
     "dev": "bun --watch run src/index.ts"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "hono": "^4.10.8",
     "mongoose": "^9.2.0",
     "shared": "workspace:*",
@@ -15,6 +16,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
     "@types/bun": "latest",
     "@types/mongoose": "^5.11.97",
     "@types/shortid": "^2.2.0",
