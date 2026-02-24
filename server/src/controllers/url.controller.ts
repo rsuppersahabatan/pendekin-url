@@ -64,8 +64,12 @@ export const shortenUrl = async (c: Context) => {
 export const redirectUrl = async (c: Context) => {
     try {
         const code = c.req.param('code')
-        const url = await URLModel.findOne({ urlCode: code })
-        
+        const url = await URLModel.findOneAndUpdate(
+            { urlCode: code },
+            { $inc: { clicks: 1 } },
+            { new: true }
+        )
+
         if (url) {
             return c.redirect(url.longUrl)
         } else {

@@ -5,6 +5,7 @@ export interface IURL extends mongoose.Document {
     longUrl: string;
     shortUrl: string;
     date: string;
+    clicks: number;
 }
 
 const URLSchema = new mongoose.Schema({
@@ -24,6 +25,10 @@ const URLSchema = new mongoose.Schema({
     date: {
         type: String,
         default: () => Date.now().toString()
+    },
+    clicks: {
+        type: Number,
+        default: 0
     }
 },
     {
