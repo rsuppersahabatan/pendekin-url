@@ -9,15 +9,14 @@ export default function Homepage() {
             </Heading>
             <InputForm />
             <Text m={'2%'}>
-                Based On ({' '}
+                Based on {' '}
                 <Link isExternal href="https://akshay-kumar-portfoilo.netlify.app/">
                     Akshay Kumar
                 </Link>
-                ) & Modified By ({' '}
+                {' '} & Modified By {' '}
                 <Link isExternal href="https://github.com/rsuppersahabatan/pendekin-url">
                     M Desta Fadilah
                 </Link>
-                )
             </Text>
         </>
     );
