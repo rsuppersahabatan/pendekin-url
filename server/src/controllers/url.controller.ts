@@ -3,7 +3,7 @@ import { URLModel } from '../models/url.model'
 import { generateShortId } from '../utils'
 import validUrl from 'valid-url'
 
-const baseUrl = process.env.BASEURI
+const baseUrl = process.env.BASEURI || 'http://localhost:3000'
 
 const generateUniqueShortId = async () => {
     let shortId;
@@ -54,9 +54,10 @@ export const shortenUrl = async (c: Context) => {
             shortUrl,
         })
         await newURL.save()
+        console.log(`[Shorten] URL Shortened: ${longUrl} -> ${shortUrl}`)
         return c.json({ urlCode: generatedCode }, 201)
     } catch (error) {
-        console.error('Error shortening URL:', error)
+        console.error('[Shorten] Error:', error)
         return c.json({ error: 'Failed to shorten URL' }, 500)
     }
 }
@@ -64,6 +65,8 @@ export const shortenUrl = async (c: Context) => {
 export const redirectUrl = async (c: Context) => {
     try {
         const code = c.req.param('code')
+        console.log(`[Redirect] Requesting code: ${code}`)
+        
         const url = await URLModel.findOneAndUpdate(
             { urlCode: code },
             { $inc: { clicks: 1 } },
@@ -71,12 +74,14 @@ export const redirectUrl = async (c: Context) => {
         )
 
         if (url) {
+            console.log(`[Redirect] Found: ${url.longUrl}`)
             return c.redirect(url.longUrl)
         } else {
+            console.warn(`[Redirect] Code not found: ${code}`)
             return c.json('No URL Found', 404)
         }
     } catch (err) {
-        console.error(err)
+        console.error('[Redirect] Server Error:', err)
         return c.json('Server Error', 500)
     }
 }

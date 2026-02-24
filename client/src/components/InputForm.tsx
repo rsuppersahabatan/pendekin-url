@@ -28,7 +28,7 @@ export const InputForm = () => {
     const [isLoading, setIsloading] = useState(false);
     const [isError, setIsError] = useState(false);
     const { hasCopied, onCopy } = useClipboard(url);
-    const clientBaseUrl = window.location.href;
+    const clientBaseUrl = window.location.origin + "/";
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
