@@ -1,4 +1,4 @@
-import mongoose, { type CallbackWithoutResultAndOptionalError } from 'mongoose';
+import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 export interface IUser extends mongoose.Document {
@@ -42,17 +42,10 @@ const UserSchema = new mongoose.Schema(
 );
 
 // Hash password sebelum disimpan
-UserSchema.pre('save', function (this: IUser, next: CallbackWithoutResultAndOptionalError) {
-    if (!this.isModified('password')) return next();
-    const self = this;
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) return next(err);
-        bcrypt.hash(self.password, salt, (hashErr, hash) => {
-            if (hashErr) return next(hashErr);
-            self.password = hash;
-            next();
-        });
-    });
+UserSchema.pre('save', async function (this: IUser) {
+    if (!this.isModified('password')) return;
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Method untuk compare password
