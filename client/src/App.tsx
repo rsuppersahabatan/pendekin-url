@@ -5,6 +5,7 @@ import ShortUrlRedirect from "./components/ShortUrlRedirect";
 import Toggle from "./components/Toggle";
 import Loginpage from "./components/Loginpage";
 import Registerpage from "./components/Registerpage";
+import ListUrlPage from "./components/ListUrlPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/' element={<Homepage />} />
         <Route path='/login' element={<Loginpage />} />
         <Route path='/register' element={<Registerpage />} />
+        <Route path='/list' element={<ListUrlPage />} />
         <Route path='/:urlCode'
           element={<ShortUrlRedirect />}
         />
