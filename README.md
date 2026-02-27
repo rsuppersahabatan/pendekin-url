@@ -1,6 +1,12 @@
 # Pendekin URL
 
-![cover](https://cdn.stevedylan.dev/ipfs/bafybeievx27ar5qfqyqyud7kemnb5n2p4rzt2matogi6qttwkpxonqhra4)
+![halaman-url](halaman-url.png)
+
+![halaman-login](halaman-login.png)
+
+![halaman-register](halaman-register.png)
+
+![daftar-list](daftar-list.png)
 
 A full-stack TypeScript monorepo starter with shared types, using Bun, Hono, Vite, and React.
 
