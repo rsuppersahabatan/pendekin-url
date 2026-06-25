@@ -10,6 +10,7 @@
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "hono": "^4.10.8",
+    "hono-rate-limiter": "^0.5.3",
     "mongoose": "^9.2.0",
     "shared": "workspace:*",
     "shortid": "^2.2.17",
